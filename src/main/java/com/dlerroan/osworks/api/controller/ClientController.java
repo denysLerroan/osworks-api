@@ -17,7 +17,9 @@ public class ClientController {
 	
 	@GetMapping("/clientes")
 	public List<Client> list() {
-		return clientRepository.findAll();
+		//return clientRepository.findAll();
+		//return clientRepository.findByName("João da Silva");
+		return clientRepository.findByNameContaining("a");
 	}
-
+	
 }
