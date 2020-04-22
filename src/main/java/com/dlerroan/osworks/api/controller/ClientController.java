@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dlerroan.osworks.domain.model.Client;
 import com.dlerroan.osworks.domain.repository.ClientRepository;
+import com.dlerroan.osworks.domain.service.RegisterClientService;
 
 @RestController
 @RequestMapping("/clientes")
@@ -27,6 +28,9 @@ public class ClientController {
 	
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private RegisterClientService service;
 	
 	@GetMapping
 	public List<Client> list() {
@@ -47,7 +51,7 @@ public class ClientController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Client insert(@Valid @RequestBody Client client) {
-		return clientRepository.save(client);
+		return service.insert(client);
 	}
 	
 	@PutMapping("/{id}")
@@ -57,7 +61,7 @@ public class ClientController {
 		}
 		
 		client.setId(id);
-		client = clientRepository.save(client);
+		client = service.insert(client);
 		
 		return ResponseEntity.ok(client);
 	}
@@ -68,7 +72,7 @@ public class ClientController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		clientRepository.deleteById(id);
+		service.delete(id);
 		
 		return ResponseEntity.noContent().build();
 	}
