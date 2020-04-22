@@ -3,6 +3,9 @@ package com.dlerroan.osworks.api.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -23,7 +29,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		for(ObjectError error : ex.getBindingResult().getAllErrors()) {
 			String name = ((FieldError) error).getField();
-			String message = error.getDefaultMessage();
+			String message = messageSource.getMessage(error, LocaleContextHolder.getLocale());
 			
 			fields.add(new Problem.Field(name, message));
 		}
