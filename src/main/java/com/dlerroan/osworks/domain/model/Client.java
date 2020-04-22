@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Client {
@@ -12,8 +15,21 @@ public class Client {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotBlank
+	@Size(max = 60)
 	private String name;
+	
+	@NotBlank
+	@Email
+	@Size(max = 255)
 	private String email;
+	
+	@NotBlank
+	@Size(max = 20)
+	/*
+	 * /@Column(name = "phone") Annotation serve para mapear atributo com a coluna do banco de dados. 
+	 * Só há necessidade de coloca-la caso o nome da coluna seja diferente do atributo.
+	 */
 	private String phone;
 	
 	public Long getId() {

@@ -3,6 +3,8 @@ package com.dlerroan.osworks.api.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +46,12 @@ public class ClientController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Client insert(@RequestBody Client client) {
+	public Client insert(@Valid @RequestBody Client client) {
 		return clientRepository.save(client);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Client> update(@PathVariable Long id, @RequestBody Client client){
+	public ResponseEntity<Client> update(@Valid @PathVariable Long id, @RequestBody Client client){
 		if(!clientRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
