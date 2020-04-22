@@ -2,23 +2,22 @@ package com.dlerroan.osworks.api.controller;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dlerroan.osworks.domain.model.Client;
+import com.dlerroan.osworks.domain.repository.ClientRepository;
 
 @RestController
 public class ClientController {
 	
-	@PersistenceContext
-	private EntityManager manager; // Responsavel por buscar no banco de dados
+	@Autowired
+	private ClientRepository clientRepository;
 	
 	@GetMapping("/clientes")
 	public List<Client> list() {
-		return manager.createQuery("from Client", Client.class).getResultList();
+		return clientRepository.findAll();
 	}
 
 }
