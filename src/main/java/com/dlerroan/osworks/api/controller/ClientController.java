@@ -1,9 +1,11 @@
 package com.dlerroan.osworks.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dlerroan.osworks.domain.model.Client;
@@ -17,9 +19,13 @@ public class ClientController {
 	
 	@GetMapping("/clientes")
 	public List<Client> list() {
-		//return clientRepository.findAll();
-		//return clientRepository.findByName("João da Silva");
-		return clientRepository.findByNameContaining("a");
+		return clientRepository.findAll();
+	}
+	
+	@GetMapping("/clientes/{id}")
+	public Client findById(@PathVariable Long id) {
+		Optional<Client> client = clientRepository.findById(id);
+		return client.orElse(null);
 	}
 	
 }
