@@ -33,7 +33,7 @@ public class ClientController {
 	private RegisterClientService service;
 	
 	@GetMapping
-	public List<Client> list() {
+	public List<Client> findAll() {
 		return clientRepository.findAll();
 	}
 	
