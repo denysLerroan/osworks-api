@@ -1,5 +1,7 @@
 package com.dlerroan.osworks.api.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +22,7 @@ public class ServiceOrderController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ServiceOrder insert(@RequestBody ServiceOrder serviceOrder) {
+	public ServiceOrder insert(@Valid @RequestBody ServiceOrder serviceOrder) {
 		return service.insert(serviceOrder);
 	}
 
