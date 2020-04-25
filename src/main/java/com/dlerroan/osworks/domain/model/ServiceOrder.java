@@ -1,7 +1,7 @@
 package com.dlerroan.osworks.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -44,10 +44,10 @@ public class ServiceOrder {
 	private ServiceOrderStatus status;
 	
 	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime openedDate;
+	private OffsetDateTime openedDate;
 	
 	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime closedDate;
+	private OffsetDateTime closedDate;
 	
 	public Long getId() {
 		return id;
@@ -79,16 +79,16 @@ public class ServiceOrder {
 	public void setStatus(ServiceOrderStatus status) {
 		this.status = status;
 	}
-	public LocalDateTime getOpenedDate() {
+	public OffsetDateTime getOpenedDate() {
 		return openedDate;
 	}
-	public void setOpenedDate(LocalDateTime openedDate) {
+	public void setOpenedDate(OffsetDateTime openedDate) {
 		this.openedDate = openedDate;
 	}
-	public LocalDateTime getClosedDate() {
+	public OffsetDateTime getClosedDate() {
 		return closedDate;
 	}
-	public void setClosedDate(LocalDateTime closedDate) {
+	public void setClosedDate(OffsetDateTime closedDate) {
 		this.closedDate = closedDate;
 	}
 	@Override

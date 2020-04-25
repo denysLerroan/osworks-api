@@ -1,6 +1,6 @@
 package com.dlerroan.osworks.api.exceptionhandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Problem {
 	
 	private Integer status;
-	private LocalDateTime dateTime;
+	private OffsetDateTime dateTime;
 	private String title;
 	private List<Field> field;
 	
@@ -46,10 +46,10 @@ public class Problem {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public LocalDateTime getDateTime() {
+	public OffsetDateTime getDateTime() {
 		return dateTime;
 	}
-	public void setDateTime(LocalDateTime dateTime) {
+	public void setDateTime(OffsetDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
 	public String getTitle() {

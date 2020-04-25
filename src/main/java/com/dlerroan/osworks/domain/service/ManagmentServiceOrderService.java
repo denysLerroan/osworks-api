@@ -1,6 +1,6 @@
 package com.dlerroan.osworks.domain.service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class ManagmentServiceOrderService {
 		
 		serviceOrder.setClient(client);
 		serviceOrder.setStatus(ServiceOrderStatus.ABERTA);
-		serviceOrder.setOpenedDate(LocalDateTime.now());
+		serviceOrder.setOpenedDate(OffsetDateTime.now());
 		
 		return repository.save(serviceOrder);
 	}
