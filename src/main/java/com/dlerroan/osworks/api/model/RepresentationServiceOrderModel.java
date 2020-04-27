@@ -8,7 +8,7 @@ import com.dlerroan.osworks.domain.model.ServiceOrderStatus;
 public class RepresentationServiceOrderModel {
 	
 	private Long id;
-	private String nameClient;
+	private ClientSummaryModel client;
 	private String description;
 	private BigDecimal price;
 	private ServiceOrderStatus status;
@@ -22,12 +22,7 @@ public class RepresentationServiceOrderModel {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNameClient() {
-		return nameClient;
-	}
-	public void setNameClient(String nameClient) {
-		this.nameClient = nameClient;
-	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -57,6 +52,12 @@ public class RepresentationServiceOrderModel {
 	}
 	public void setClosedDate(OffsetDateTime closedDate) {
 		this.closedDate = closedDate;
+	}
+	public ClientSummaryModel getClient() {
+		return client;
+	}
+	public void setClient(ClientSummaryModel client) {
+		this.client = client;
 	}
 
 }
