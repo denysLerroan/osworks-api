@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dlerroan.osworks.api.model.OSInputModel;
 import com.dlerroan.osworks.api.model.RepresentationServiceOrderModel;
 import com.dlerroan.osworks.domain.model.ServiceOrder;
 import com.dlerroan.osworks.domain.repository.ServiceOrderRepository;
@@ -38,7 +39,9 @@ public class ServiceOrderController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public RepresentationServiceOrderModel insert(@Valid @RequestBody ServiceOrder serviceOrder) {
+	public RepresentationServiceOrderModel insert(@Valid @RequestBody OSInputModel osInput) {
+		ServiceOrder serviceOrder = toEntity(osInput);
+		
 		return toModel(service.insert(serviceOrder));
 	}
 	
@@ -67,6 +70,10 @@ public class ServiceOrderController {
 		return servicesOrder.stream()
 				.map(serviceOrder -> toModel(serviceOrder))
 				.collect(Collectors.toList());
+	}
+	
+	private ServiceOrder toEntity(OSInputModel osInput) {
+		return modelMapper.map(osInput, ServiceOrder.class);
 	}
 
 }
