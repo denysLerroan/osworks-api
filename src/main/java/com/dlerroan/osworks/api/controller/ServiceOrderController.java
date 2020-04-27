@@ -2,6 +2,7 @@ package com.dlerroan.osworks.api.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -37,13 +38,13 @@ public class ServiceOrderController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ServiceOrder insert(@Valid @RequestBody ServiceOrder serviceOrder) {
-		return service.insert(serviceOrder);
+	public RepresentationServiceOrderModel insert(@Valid @RequestBody ServiceOrder serviceOrder) {
+		return toModel(service.insert(serviceOrder));
 	}
 	
 	@GetMapping
-	public List<ServiceOrder> findAll(){
-		return repository.findAll();
+	public List<RepresentationServiceOrderModel> findAll(){
+		return toCollectionModel(repository.findAll());
 	}
 	
 	@GetMapping("/{serviceOrderId}")
@@ -51,11 +52,21 @@ public class ServiceOrderController {
 		Optional<ServiceOrder> serviceOrder = repository.findById(serviceOrderId);
 		
 		if(serviceOrder.isPresent()) {
-			RepresentationServiceOrderModel model = modelMapper.map(serviceOrder.get(), RepresentationServiceOrderModel.class);
+			RepresentationServiceOrderModel model = toModel(serviceOrder.get());
 			return ResponseEntity.ok(model);
 		}
 		
 		return ResponseEntity.notFound().build();
+	}
+	
+	private RepresentationServiceOrderModel toModel(ServiceOrder serviceOrder) {
+		return modelMapper.map(serviceOrder, RepresentationServiceOrderModel.class);
+	}
+	
+	private List<RepresentationServiceOrderModel> toCollectionModel(List<ServiceOrder> servicesOrder){
+		return servicesOrder.stream()
+				.map(serviceOrder -> toModel(serviceOrder))
+				.collect(Collectors.toList());
 	}
 
 }
