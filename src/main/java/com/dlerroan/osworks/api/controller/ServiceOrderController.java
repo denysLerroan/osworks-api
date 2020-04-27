@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dlerroan.osworks.api.model.RepresentationServiceOrderModel;
 import com.dlerroan.osworks.domain.model.ServiceOrder;
 import com.dlerroan.osworks.domain.repository.ServiceOrderRepository;
 import com.dlerroan.osworks.domain.service.ManagmentServiceOrderService;
@@ -30,6 +32,9 @@ public class ServiceOrderController {
 	@Autowired
 	private ServiceOrderRepository repository;
 	
+	@Autowired
+	private ModelMapper modelMapper; //Deve ser anotado como um bean para o spring; foi criada a classe ModelMapperConfig no pacote core.
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ServiceOrder insert(@Valid @RequestBody ServiceOrder serviceOrder) {
@@ -42,11 +47,12 @@ public class ServiceOrderController {
 	}
 	
 	@GetMapping("/{serviceOrderId}")
-	public ResponseEntity<ServiceOrder> findById(@PathVariable Long serviceOrderId){
+	public ResponseEntity<RepresentationServiceOrderModel> findById(@PathVariable Long serviceOrderId){
 		Optional<ServiceOrder> serviceOrder = repository.findById(serviceOrderId);
 		
 		if(serviceOrder.isPresent()) {
-			return ResponseEntity.ok(serviceOrder.get());
+			RepresentationServiceOrderModel model = modelMapper.map(serviceOrder.get(), RepresentationServiceOrderModel.class);
+			return ResponseEntity.ok(model);
 		}
 		
 		return ResponseEntity.notFound().build();
