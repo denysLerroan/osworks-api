@@ -38,9 +38,16 @@ public class ManagmentServiceOrderService {
 		return repository.save(serviceOrder);
 	}
 	
+	public void closeOrder(Long serviceOrderId) {
+		ServiceOrder serviceOrder = find(serviceOrderId);
+		
+		serviceOrder.close();
+		
+		repository.save(serviceOrder);
+	}
+	
 	public Comment addComment(Long serviceOrderId, String description) {
-		ServiceOrder serviceOrder = repository.findById(serviceOrderId)
-				.orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+		ServiceOrder serviceOrder = find(serviceOrderId);
 		
 		Comment comment = new Comment();
 		comment.setSendDate(OffsetDateTime.now());
@@ -48,6 +55,11 @@ public class ManagmentServiceOrderService {
 		comment.setServiceOrder(serviceOrder);
 		
 		return commentRepository.save(comment);
+	}
+	
+	private ServiceOrder find(Long serviceOrderId) {
+		return repository.findById(serviceOrderId)
+				.orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
 	}
 
 }

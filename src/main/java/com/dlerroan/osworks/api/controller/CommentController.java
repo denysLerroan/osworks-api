@@ -3,7 +3,6 @@ package com.dlerroan.osworks.api.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;

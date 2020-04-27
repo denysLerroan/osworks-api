@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.dlerroan.osworks.domain.exception.BusinessException;
+
 @Entity
 public class ServiceOrder {
 	
@@ -107,6 +109,15 @@ public class ServiceOrder {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public void close() {
+		if(!ServiceOrderStatus.ABERTA.equals(getStatus())) {
+			throw new BusinessException("Ordem de serviço não pode ser finalizada");
+		}
+		
+		setStatus(ServiceOrderStatus.FINALIZADA);
+		setClosedDate(OffsetDateTime.now());
 	}
 
 }
